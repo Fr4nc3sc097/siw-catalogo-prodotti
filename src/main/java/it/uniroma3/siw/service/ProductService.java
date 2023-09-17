@@ -29,12 +29,12 @@ public class ProductService {
 //    ImageRepository imageRepository;
 
 //    @Transactional
-//    public void createMovie(Movie movie, MultipartFile image) throws IOException {
-//        Image movieImg = new Image(image.getBytes());
-//        this.imageRepository.save(movieImg);
+//    public void createMovie(Book book, MultipartFile image) throws IOException {
+//        Image bookImg = new Image(image.getBytes());
+//        this.imageRepository.save(bookImg);
 //
-//        movie.setImage(movieImg);
-//        this.productRepository.save(movie);
+//        book.setImage(bookImg);
+//        this.productRepository.save(book);
 //    }
 
     @Transactional
@@ -75,4 +75,20 @@ public class ProductService {
         }
         return false;
     }
+
+    public Product findById(Long id){
+        return this.productRepository.findById(id).orElse(null);
+    }
+
+    @Transactional
+    public void removeProduct(Product product){
+        this.productRepository.delete(product);
+    }
+
+    public Iterable<Product> findAll(){
+        return this.productRepository.findAll();
+    }
+
+
+
 }

@@ -18,5 +18,4 @@ public interface SupplierRepository extends CrudRepository<Supplier,Long> {
     boolean existsByNameAndSurnameAndAddressAndEmailAndIva(String name, String surname, String address, String email, String iva);
     // @Transactional
     Set<Supplier> getByProductsNotContains(Product product);
-    /*List <Artist> getByDirectedMoviesNotContaining(Movie movie);*/
 }

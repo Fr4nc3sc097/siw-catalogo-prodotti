@@ -1,19 +1,55 @@
-:root{
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+:root {
+    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     --jet-black: #2A2A2A;
     --cream: #efe9e7;
-    --lavander: #dae0f2;
+    --lavender: #dae0f2;
     --purple: #52154e;
     --bluenavy: #111344;
+    --green: #4CAF50;
+    --orange: #FF9800;
+    --red: #F44336;
+    --yellow: #FFEB3B;
+    --pink: #E91E63;
+    --light-blue: #03A9F4;
+    --teal: #009688;
+    --brown: #795548;
+    --gray: #9E9E9E;
+    --dark-gray: #616161;
+    --cyan: #00BCD4;
+    --lime: #CDDC39;
+    --indigo: #3F51B5;
+    --amber: #FFC107;
+    --deep-purple: #673AB7;
 }
 
-*{
+* {
     box-sizing: border-box;
     margin: 0;
+    padding: 0;
     color: var(--jet-black);
+    font-family: var(--font-family);
 }
 
-body{
-    background-color: var(--lavander);
+body {
+    background-color: var(--cream);
 }
 
+/* Aggiungi qualche stile agli elementi HTML base, ad esempio paragrafi e intestazioni */
+p {
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+h1, h2, h3 {
+    color: var(--bluenavy);
+}
+
+a {
+    text-decoration: none;
+    color: var(--purple);
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: var(--bluenavy);
+}

@@ -28,124 +28,140 @@ import jakarta.validation.Valid;
 
 @Controller
 public class AdminController {
-	
-//	 @Autowired
-//	 private ImageRepository imageRepository;
-	 @Autowired
-	 private ProductRepository productRepository;
-	 @Autowired
-	 private SupplierRepository supplierRepository;
-	 @Autowired
-	 private ProductValidator productValidator;
-	 @Autowired
-	 private SupplierValidator supplierValidator;
-	 @Autowired
-	 private ProductService productService;
-	 @Autowired
-	 private UserService userService;
 
-	 @GetMapping("/admin/formNewProduct")
-	 public String newProduct(Model model){
-		 model.addAttribute("product",new Product());
-		 return "/admin/formNewProduct.html";
-	 }
-	 
-	 @PostMapping("/admin/uploadProduct")
-	 public String newProduct(Model model, @Valid @ModelAttribute("product") Product product, BindingResult bindingResult){    //, @RequestParam("file") MultipartFile image)   throws IOException   
-		 this.productValidator.validate(product,bindingResult);
-		 if(!bindingResult.hasErrors()){
-			 this.productService.createProduct(product);  //, image)
-			 model.addAttribute("product", product);
+	//	 @Autowired
+//	 private ImageRepository imageRepository;
+	@Autowired
+	private ProductRepository productRepository;
+	@Autowired
+	private SupplierRepository supplierRepository;
+	@Autowired
+	private ProductValidator productValidator;
+	@Autowired
+	private SupplierValidator supplierValidator;
+	@Autowired
+	private ProductService productService;
+	@Autowired
+	private UserService userService;
+
+	@GetMapping("/admin/formNewProduct")
+	public String newProduct(Model model) {
+		model.addAttribute("product", new Product());
+		return "/admin/formNewProduct.html";
+	}
+
+	@PostMapping("/admin/uploadProduct")
+	public String newProduct(Model model, @Valid @ModelAttribute("product") Product product, BindingResult bindingResult) {    //, @RequestParam("file") MultipartFile image)   throws IOException
+		this.productValidator.validate(product, bindingResult);
+		if (!bindingResult.hasErrors()) {
+			this.productService.createProduct(product);  //, image)
+			model.addAttribute("product", product);
 //			 model.addAttribute("image", product.getImage());
-			 model.addAttribute("userDetails", this.userService.getUserDetails());
-			 return "product.html";
-		 } else {
-			 return "/admin/formNewProduct.html";
-		 }
-	 }
-	 
-	  @GetMapping("/admin/formNewSupplier")
-	    public String formNewSupplier(Model model){
-	        model.addAttribute("supplier",new Supplier());
-	        return "/admin/formNewSupplier.html";
-	    }
-	  
-	  @PostMapping("/admin/supplier")
-	    public String newSupplier(Model model,@Valid @ModelAttribute("supplier") Supplier supplier, BindingResult bindingResult) {  //, @RequestParam("file") MultipartFile image)  throws  IOException
-	        this.supplierValidator.validate(supplier, bindingResult);
-	        if(!bindingResult.hasErrors()){
+			model.addAttribute("userDetails", this.userService.getUserDetails());
+			return "product.html";
+		} else {
+			return "/admin/formNewProduct.html";
+		}
+	}
+
+	@GetMapping("/admin/formNewSupplier")
+	public String formNewSupplier(Model model) {
+		model.addAttribute("supplier", new Supplier());
+		return "/admin/formNewSupplier.html";
+	}
+
+	@PostMapping("/admin/supplier")
+	public String newSupplier(Model model, @Valid @ModelAttribute("supplier") Supplier supplier, BindingResult bindingResult) {  //, @RequestParam("file") MultipartFile image)  throws  IOException
+		this.supplierValidator.validate(supplier, bindingResult);
+		if (!bindingResult.hasErrors()) {
 //	            Image pic = new Image(image.getBytes());
 //	            this.imageRepository.save(pic);
 //	            supplier.setProfilePicture(pic);
-	            this.supplierRepository.save(supplier);
+			this.supplierRepository.save(supplier);
 
-	            model.addAttribute("supplier", supplier);
+			model.addAttribute("supplier", supplier);
 //	            model.addAttribute("profilePic", pic );
-	            model.addAttribute("userDetails", this.userService.getUserDetails());
-	            return "supplier.html";
-	        }
-	        else {
-	            return "/admin/formNewSupplier.html";
-	        }
-	    }
-	  
-	  @GetMapping("/admin/manageProducts")
-	    public String manageProducts(Model model){
-	        model.addAttribute("products", this.productRepository.findAll());
-	        return "/admin/manageProducts.html";
-	    }
-	  
+			model.addAttribute("userDetails", this.userService.getUserDetails());
+			return "supplier.html";
+		} else {
+			return "/admin/formNewSupplier.html";
+		}
+	}
 
-	    @Transactional
-	    @GetMapping("/admin/formUpdateProduct/{id}")
-	    public String formUpdateProduct(@PathVariable("id") Long id, Model model){
-	        model.addAttribute("product", this.productRepository.findById(id).get());
-	        return "/admin/formUpdateProduct.html";
-	    }
-	    
-//metodi director
-	    
-	    //funzione ausiliaria
-	    @Transactional
-	    public Set<Supplier> suppliersToAdd(Long productId){
-	        Set<Supplier> suppliersToAdd= new HashSet<Supplier>();
-	        suppliersToAdd = this.supplierRepository.getByProductsNotContains(this.productRepository.findById(productId).get());
-	        return suppliersToAdd;
-	    }
-	    
-	    @Transactional
-	    @GetMapping("/admin/updateSuppliersOnProduct/{id}")
-	    public String updateSuppliers(@PathVariable("id") Long id,Model model ){
+	@GetMapping("/admin/manageProducts")
+	public String manageProducts(Model model) {
+		model.addAttribute("products", this.productRepository.findAll());
+		return "/admin/manageProducts.html";
+	}
 
-	        Set<Supplier> suppliersToAdd = this.suppliersToAdd(id);
-	        model.addAttribute("product", this.productRepository.findById(id).get());
-	        model.addAttribute("suppliersToAdd", suppliersToAdd);
 
-	        return "/admin/suppliersToAdd.html";
-	    }
-	    
-	    @Transactional
-	    @GetMapping("/admin/addSupplierToProduct/{supplierId}/{productId}")
-	    public String addSupplierToProduct(@PathVariable("supplierId") Long supplierId, @PathVariable("productId") Long productId, Model model){
-	        Product product = this.productRepository.findById(productId).get();
-	        this.productService.setSupplierToProduct(product, supplierId);
+	@Transactional
+	@GetMapping("/admin/formUpdateProduct/{id}")
+	public String formUpdateProduct(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("product", this.productRepository.findById(id).get());
+		return "/admin/formUpdateProduct.html";
+	}
 
-	        model.addAttribute("product", product);
-	        model.addAttribute("suppliersToAdd", suppliersToAdd(productId));
 
-	        return "/admin/suppliersToAdd.html";
-	    }
-	    
-	    @Transactional
-	    @GetMapping("/admin/removeSupplierFromProduct/{supplierId}/{productId}")
-	    public String removeSupplierFromProduct(@PathVariable("supplierId") Long supplierId, @PathVariable("productId") Long productId, Model model){
-	        Product product = this.productRepository.findById(productId).get();
+	//funzione ausiliaria
+	@Transactional
+	public Set<Supplier> suppliersToAdd(Long productId) {
+		Set<Supplier> suppliersToAdd = new HashSet<Supplier>();
+		suppliersToAdd = this.supplierRepository.getByProductsNotContains(this.productRepository.findById(productId).get());
+		return suppliersToAdd;
+	}
 
-	        this.productService.removeSupplierToProduct(product, supplierId);
+	@Transactional
+	@GetMapping("/admin/updateSuppliersOnProduct/{id}")
+	public String updateSuppliers(@PathVariable("id") Long id, Model model) {
 
-	        model.addAttribute("product", product);
-	        model.addAttribute("suppliersToAdd", suppliersToAdd(productId));
-	        
-	        return "/admin/suppliersToAdd.html";
-	    }
+		Set<Supplier> suppliersToAdd = this.suppliersToAdd(id);
+		model.addAttribute("product", this.productRepository.findById(id).get());
+		model.addAttribute("suppliersToAdd", suppliersToAdd);
+
+		return "/admin/suppliersToAdd.html";
+	}
+
+
+	@Transactional
+	@GetMapping("/admin/addSupplierToProduct/{supplierId}/{productId}")
+	public String addSupplierToProduct(@PathVariable("supplierId") Long supplierId, @PathVariable("productId") Long productId, Model model) {
+		Product product = this.productRepository.findById(productId).get();
+		this.productService.setSupplierToProduct(product, supplierId);
+
+		model.addAttribute("product", product);
+		model.addAttribute("suppliersToAdd", suppliersToAdd(productId));
+
+		return "/admin/suppliersToAdd.html";
+	}
+
+	@Transactional
+	@GetMapping("/admin/removeSupplierFromProduct/{supplierId}/{productId}")
+	public String removeSupplierFromProduct(@PathVariable("supplierId") Long supplierId, @PathVariable("productId") Long productId, Model model) {
+		Product product = this.productRepository.findById(productId).get();
+
+		this.productService.removeSupplierToProduct(product, supplierId);
+
+		model.addAttribute("product", product);
+		model.addAttribute("suppliersToAdd", suppliersToAdd(productId));
+
+		return "/admin/suppliersToAdd.html";
+	}
+
+	@GetMapping("/admin/removeProduct/{productId}")
+	public String removeProduct(@PathVariable("productId") Long id,
+							 Model model) {
+		Product product = productService.findById(id);
+		if (product == null) return "/error";
+
+		productService.removeProduct(productService.findById(id));
+		return showProductsAdmin(model);
+	}
+
+	@GetMapping("/admin/product")
+	public String showProductsAdmin(Model model) {
+		model.addAttribute("products", this.productService.findAll());
+		return "products";
+	}
+
 }

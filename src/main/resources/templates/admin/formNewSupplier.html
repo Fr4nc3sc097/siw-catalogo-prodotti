@@ -22,30 +22,21 @@
         <div>
             <label>Name: </label>
             <span><input type="text" th:field="${supplier.name}" placeholder="Name"></span>
-            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" >...</span>
+            <span th:if="${#fields.hasErrors('name')}" th:errors="*{supplier.name}" >...</span>
         </div>
         <div>
             <label>Surname: </label>
             <span><input required type="text" th:field="${supplier.surname}" placeholder="Surname"></span>
-            <span th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}" >...</span>
+            <span th:if="${#fields.hasErrors('surname')}" th:errors="*{supplier.surname}" >...</span>
         </div>
         <div>
             <label>PIVA: </label>
             <span><input required type="text" th:field="${supplier.iva}" placeholder="iva"></span>
-            <span th:if="${#fields.hasErrors('iva')}" th:errors="*{iva}" >...</span>
+            <span th:if="${#fields.hasErrors('iva')}" th:errors="*{supplier.iva}" >...</span>
         </div>
 <!---        <div>
-            <label>Date of birth: </label>
-            <span><input required type="date" th:field="${artist.birthDate}"></span>
-            <span th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}" >...</span>
-        </div>
-        <div>
-            <label>Date of death <span>(Optional)</span>: </label>
-            <span><input type="date" th:field="${artist.deathDate}"></span>
-            <span th:if="${#fields.hasErrors('deathDate')}" th:errors="*{deathDate}" >...</span>
-        </div>
-        <div>
-            <label>Artist Picture:</label>
+
+            <label>Product Picture:</label>
             <span><input required type="file" name="file"></span>
         </div>
 -->

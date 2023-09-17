@@ -103,7 +103,6 @@ public class GlobalController {
 		return "formRegister.html";
 	}
 
-	/* ridondante, ma viene usata anche per la admin dashboard */
 	@GetMapping("/products")
 	public String products(Model model){
 
