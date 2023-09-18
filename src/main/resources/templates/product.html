@@ -44,7 +44,7 @@
         <div th:if="${review != null}">
             <h2>REVIEWS</h2>
             <form th:action="@{'/user/review/' + ${product.id}}" th:object="${review}" method="post" id="review">
-                <h3>Post a review for this film!</h3>
+                <h3>Post a review for this product!</h3>
                 <span><input type="text" th:field="${review.title}" placeholder="Review Title"></span>
                 <span><input id="form-rev-text" type="text" th:field="${review.text}" placeholder="Your review text"></span>
                 <span id="rating">Rating: 
