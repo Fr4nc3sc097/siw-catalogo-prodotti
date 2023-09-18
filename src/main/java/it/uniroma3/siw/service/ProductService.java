@@ -89,6 +89,8 @@ public class ProductService {
         return this.productRepository.findAll();
     }
 
-
-
+    @Transactional
+    public Product updateProduct(Product product) {
+        return this.productRepository.save(product);
+    }
 }

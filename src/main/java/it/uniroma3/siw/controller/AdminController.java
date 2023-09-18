@@ -155,13 +155,29 @@ public class AdminController {
 		if (product == null) return "/error";
 
 		productService.removeProduct(productService.findById(id));
-		return showProductsAdmin(model);
+		return manageProducts(model);
 	}
 
-	@GetMapping("/admin/product")
-	public String showProductsAdmin(Model model) {
-		model.addAttribute("products", this.productService.findAll());
-		return "products";
+	@GetMapping("/admin/editProduct/{productId}")
+	public String editProduct(@PathVariable("productId") Long id,
+							  Model model) {
+		Product product = productService.findById(id);
+		if (product == null) return "/error";
+
+		model.addAttribute("product", product);
+		return "/admin/editProduct.html";
 	}
+
+	@PostMapping("/admin/updateProduct/{productId}")
+	public String updateProduct(@Valid @ModelAttribute("product") Product product,
+								@PathVariable("productId") Long id,
+								Model model) {
+		product.setId(id);
+		Product newProduct = productService.updateProduct(product);
+		model.addAttribute("product", newProduct);
+		return manageProducts(model);
+	}
+
+
 
 }

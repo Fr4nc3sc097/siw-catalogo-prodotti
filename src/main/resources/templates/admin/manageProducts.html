@@ -24,8 +24,15 @@
     <div class="product-list">
       <div class="product" th:each="product : ${products}">
         <a th:href="@{'/admin/formUpdateProduct/' + ${product.id}}" th:text="${product.name} + ' (' + ${product.code} + ')'">Pasta (1234)</a>
+          <a th:href="@{'/admin/removeProduct/' + ${product.id}}">
+              Delete
+          </a>
+          <a th:href="@{'/admin/editProduct/' + ${product.id}}">
+              Edit
+          </a>
       </li>
     </div>
+  </div>
   </div>
 </body>
 </html>
